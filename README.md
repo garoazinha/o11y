@@ -1,24 +1,16 @@
-# README
+Repo pra documentar experimentos com observabilidade
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+make bash abre um shell dentro de um container
 
-Things you may want to cover:
+Tracing: OpenTelemetry-Ruby e Jaeger 
+Logs: Loki
+Metrics: Prometheus
 
-* Ruby version
+Jaeger abre no localhost:16686/
+Grafana abre no localhost:4000/
+Prometheus abre no clááássico localhost:9090
 
-* System dependencies
+TODO
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Criar um dashboard com o grafana
+- Decidir como gerar métricas de performance (rails_performance? yabeda-rails?)
