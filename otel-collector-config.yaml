@@ -1,0 +1,43 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+  docker_stats:
+    endpoint: unix:///var/run/docker.sock
+    collection_interval: 15s
+  filelog:
+    include: [ /var/log/rails/*.log ]
+    attributes:
+      service.name: cat-ruby
+    resource:
+      service.name: cat-ruby
+exporters:
+  debug:
+    verbosity: detailed
+  prometheus:
+    endpoint: 0.0.0.0:9464
+  otlp/jaeger:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+  otlphttp/logs:
+    endpoint: http://loki:3100/otlp
+    tls:
+      insecure: true
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/jaeger]
+    metrics:
+      receivers: [otlp, docker_stats]
+      processors: [batch]
+      exporters: [prometheus]
+    logs:
+      receivers: [otlp, filelog]
+      processors: [batch]
+      exporters: [debug, otlphttp/logs]
+processors:
+  batch:

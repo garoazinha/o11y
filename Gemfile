@@ -31,6 +31,11 @@ gem "bootsnap", require: false
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", require: false
 
+gem "opentelemetry-sdk", "~> 1.6"
+gem "opentelemetry-instrumentation-all"
+gem "mission_control-jobs", require: false
+gem "opentelemetry-exporter-otlp"
+
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 

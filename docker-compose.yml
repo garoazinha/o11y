@@ -1,0 +1,102 @@
+services:
+  app: 
+    build: 
+      dockerfile: Dockerfile.dev
+      context: .
+    volumes:
+      - .:/app
+      - bundle:/usr/local/bundle
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - otel-collector
+      - prometheus
+      - jaeger
+      - loki
+      - grafana
+      - redis
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+      - REDIS_URL=redis://redis:6379
+      - DOCKER_DB_HOST=db
+  db:
+    image: postgres:15.3-alpine
+    container_name: db
+    restart: always
+    command: postgres -c shared_preload_libraries=pg_stat_statements
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+  redis:
+    image: "redis:7-alpine"
+    ports:
+      - 6379
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports: 
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/prometheus/prometheus.yml
+    command:
+      - '--web.enable-otlp-receiver'
+      - '--enable-feature=otlp-write-receive'
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib
+    container_name: otel-collector
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+      - ./log/:/var/log/rails/
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 4318:4318 # OTLP http receiver
+      - 4317:4317
+      - 9464:9464
+    depends_on:
+      - prometheus
+      # - jaeger
+      # - loki
+      # - grafana
+    user: 0:0
+  grafana:
+    image: grafana/grafana:9.0.1
+    container_name: grafana
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    ports:
+      - "4000:4000"
+  jaeger:
+    image: jaegertracing/all-in-one
+    container_name: jaeger
+    ports:
+      - 16686:16686
+      - 14268
+      - 14250
+  loki:
+    image: grafana/loki:3.0.0
+    volumes:
+      - ./loki/config.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+    container_name: loki
+    ports:
+      - 3100:3100
+  # fluentd:
+  #   container_name: fluentd
+  #   image: fluent/fluentd:v1.12.0-debian-1.0
+  #   volumes:
+  #     - ./fluent/conf:/fluentd/etc
+  #   ports:
+  #     - "24224:24224"
+  #     - "24224:24224/udp"
+
+
+  
+volumes:
+  bundle:
+  db_data:
