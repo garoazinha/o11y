@@ -35,6 +35,7 @@ gem "opentelemetry-sdk", "~> 1.6"
 gem "opentelemetry-instrumentation-all"
 gem "mission_control-jobs", require: false
 gem "opentelemetry-exporter-otlp"
+gem 'prometheus_exporter'
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false

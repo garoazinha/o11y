@@ -12,14 +12,16 @@ services:
       - db
       - otel-collector
       - prometheus
-      - jaeger
-      - loki
+      - prometheus-exporter
+      # - jaeger
+      # - loki
       - grafana
       - redis
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
       - REDIS_URL=redis://redis:6379
       - DOCKER_DB_HOST=db
+      - PROMETHEUS_EXPORTER_HOST=prometheus-exporter
   db:
     image: postgres:15.3-alpine
     container_name: db
@@ -31,6 +33,18 @@ services:
       - db_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
+  prometheus-exporter:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: .
+    command: >
+      /bin/sh -c
+      "bundle install && bundle exec prometheus_exporter -b 0.0.0.0"
+    volumes:
+      - .:/app
+      - bundle:/usr/local/bundle
+    ports: 
+      - 9394:9394
   redis:
     image: "redis:7-alpine"
     ports:
