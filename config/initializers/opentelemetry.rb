@@ -7,5 +7,5 @@ require 'opentelemetry/exporter/otlp'
 ENV['OTEL_TRACES_EXPORTER'] ||= 'otlp'
 OpenTelemetry::SDK.configure do |c|
   c.service_name = 'cat-service'
-  # c.use_all()
+  c.use_all()
 end

@@ -1,9 +1,11 @@
 scrape_configs:
   - job_name: cat-ruby
-    scrape_interval: 5s
+    scrape_interval: 1s
     static_configs:
       - targets: ["otel-collector:9464"]
   - job_name: another
-    scrape_interval: 5s
+    scrape_interval: 1s
+    scheme: http
+    metrics_path: '/metrics'
     static_configs:
-      - targets: ["prometheus-exporter:9394"]
+      - targets: ['rails:3000']

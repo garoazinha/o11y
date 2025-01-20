@@ -6,13 +6,15 @@ services:
     volumes:
       - .:/app
       - bundle:/usr/local/bundle
+    hostname: rails
     ports:
       - 3000:3000
+      - 9394:9394
     depends_on:
       - db
       - otel-collector
       - prometheus
-      - prometheus-exporter
+      # - prometheus-exporter
       # - jaeger
       # - loki
       - grafana
@@ -21,7 +23,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
       - REDIS_URL=redis://redis:6379
       - DOCKER_DB_HOST=db
-      - PROMETHEUS_EXPORTER_HOST=prometheus-exporter
+      # - PROMETHEUS_EXPORTER_HOST=prometheus-exporter
   db:
     image: postgres:15.3-alpine
     container_name: db
@@ -43,8 +45,8 @@ services:
     volumes:
       - .:/app
       - bundle:/usr/local/bundle
-    ports: 
-      - 9394:9394
+    # ports: 
+    #   - 9394:9394
   redis:
     image: "redis:7-alpine"
     ports:
@@ -58,7 +60,6 @@ services:
       - ./prometheus.yml:/prometheus/prometheus.yml
     command:
       - '--web.enable-otlp-receiver'
-      - '--enable-feature=otlp-write-receive'
   otel-collector:
     image: otel/opentelemetry-collector-contrib
     container_name: otel-collector
