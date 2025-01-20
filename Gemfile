@@ -35,15 +35,16 @@ gem "opentelemetry-sdk", "~> 1.6"
 gem "opentelemetry-instrumentation-all"
 gem "mission_control-jobs", require: false
 gem "opentelemetry-exporter-otlp"
-gem 'yabeda-rails'
-gem 'yabeda-puma-plugin'
-gem 'yabeda-prometheus'
+gem "yabeda-rails"
+gem "yabeda-puma-plugin"
+gem "yabeda-prometheus"
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "rubocop"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
