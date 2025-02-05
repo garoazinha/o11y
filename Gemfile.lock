@@ -395,7 +395,7 @@ GEM
       opentelemetry-semantic_conventions (>= 1.8.0)
     opentelemetry-registry (0.3.1)
       opentelemetry-api (~> 1.1)
-    opentelemetry-sdk (1.6.0)
+    opentelemetry-sdk (1.7.0)
       opentelemetry-api (~> 1.1)
       opentelemetry-common (~> 0.20)
       opentelemetry-registry (~> 0.2)
@@ -592,7 +592,7 @@ DEPENDENCIES
   mission_control-jobs
   opentelemetry-exporter-otlp
   opentelemetry-instrumentation-all
-  opentelemetry-sdk (~> 1.6)
+  opentelemetry-sdk (~> 1.7)
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)

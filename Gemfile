@@ -31,7 +31,7 @@ gem "bootsnap", require: false
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", require: false
 
-gem "opentelemetry-sdk", "~> 1.6"
+gem "opentelemetry-sdk", "~> 1.7"
 gem "opentelemetry-instrumentation-all"
 gem "mission_control-jobs", require: false
 gem "opentelemetry-exporter-otlp"
