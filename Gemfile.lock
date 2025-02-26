@@ -200,8 +200,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.1-x86_64-linux-musl)
       racc (~> 1.4)
-    opentelemetry-api (1.4.0)
-    opentelemetry-common (0.21.0)
+    opentelemetry-api (1.5.0)
+    opentelemetry-common (0.22.0)
       opentelemetry-api (~> 1.0)
     opentelemetry-exporter-otlp (0.29.1)
       google-protobuf (>= 3.18)
@@ -393,14 +393,14 @@ GEM
       opentelemetry-helpers-sql-obfuscation
       opentelemetry-instrumentation-base (~> 0.23.0)
       opentelemetry-semantic_conventions (>= 1.8.0)
-    opentelemetry-registry (0.3.1)
+    opentelemetry-registry (0.4.0)
       opentelemetry-api (~> 1.1)
-    opentelemetry-sdk (1.6.0)
+    opentelemetry-sdk (1.8.0)
       opentelemetry-api (~> 1.1)
       opentelemetry-common (~> 0.20)
       opentelemetry-registry (~> 0.2)
       opentelemetry-semantic_conventions
-    opentelemetry-semantic_conventions (1.10.1)
+    opentelemetry-semantic_conventions (1.11.0)
       opentelemetry-api (~> 1.0)
     ostruct (0.6.1)
     parallel (1.26.3)
@@ -592,7 +592,7 @@ DEPENDENCIES
   mission_control-jobs
   opentelemetry-exporter-otlp
   opentelemetry-instrumentation-all
-  opentelemetry-sdk (~> 1.6)
+  opentelemetry-sdk (~> 1.8)
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
